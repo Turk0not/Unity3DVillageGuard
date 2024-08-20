@@ -60,7 +60,7 @@ namespace RPG.Controller
                     continue;
                 }
 
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButton(0))
                 {
                     GetComponent<Figther>().Attack(target.gameObject);  
                 }
