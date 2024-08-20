@@ -2,6 +2,7 @@ using RPG.Core;
 using RPG.Movement;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -54,6 +55,16 @@ namespace RPG.Combat
             GetComponent<Animator>().SetTrigger("attack");
         }
 
+        public bool CanAttack(GameObject combatTarget)
+        {
+            if (combatTarget == null)
+            {
+                return false;
+            }
+            Health healthToTest = GetComponent<Health>();
+            return healthToTest != null && !healthToTest.IsDead();
+        }
+
         private void TriggerAttack()
         {
             GetComponent<Animator>().ResetTrigger("stopAttack");
@@ -74,7 +85,7 @@ namespace RPG.Combat
             return Vector3.Distance(transform.position, targetObject.transform.position) < weaponRange;
         }
 
-        public void Attack(CombatTarget target)
+        public void Attack(GameObject target)
         {
             GetComponent<ActionSchedular>().StartAction(this);
             targetObject = target.GetComponent<Health>(); 

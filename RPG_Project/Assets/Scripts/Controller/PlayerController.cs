@@ -1,4 +1,5 @@
 using RPG.Combat;
+using RPG.Core;
 using RPG.Movement;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,9 +9,21 @@ namespace RPG.Controller
 {
     public class PlayerController : MonoBehaviour
     {
+        Health health;
+
+        private void Start()
+        {
+            health = GetComponent<Health>();
+        }
 
         void Update()
         {
+            if (health.IsDead() == true) 
+            {
+                return;
+                
+
+            }
             if (InteractWithCombat() == true)
             {
                 return;
@@ -36,9 +49,20 @@ namespace RPG.Controller
                     continue;
                 }
 
+
+                if (!GetComponent<Figther>().CanAttack(target.gameObject))
+                {
+                    continue;
+                }
+
+                if (target == null)
+                {
+                    continue;
+                }
+
                 if (Input.GetMouseButtonDown(0))
                 {
-                    GetComponent<Figther>().Attack(target);  
+                    GetComponent<Figther>().Attack(target.gameObject);  
                 }
                 return true;
 
